@@ -32,4 +32,4 @@
 *.app
 
 # Ignore Doxygen-generated documentation
-docs/
+doc/
