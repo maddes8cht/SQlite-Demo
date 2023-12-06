@@ -7,6 +7,7 @@ RELEASE_CCFLAGS = $(COMMON_CCFLAGS) -O2
 LDFLAGS = -lsqlite3
 
 SRC_DIR = src
+DOCS_DIR = doc
 BUILD_DIR_DEBUG = build/debug
 BUILD_DIR_RELEASE = build/release
 EXECUTABLE_DEBUG = $(BUILD_DIR_DEBUG)/sqlite-demo.exe
@@ -19,7 +20,7 @@ DEPS_DEBUG = $(OBJECTS_DEBUG:.o=.d)
 DEPS_RELEASE = $(OBJECTS_RELEASE:.o=.d)
 
 # Default value for VERSION (can be overridden from the command line)
-VERSION ?= debug
+VERSION ?= release
 
 .PHONY: all debug release clean
 
@@ -61,5 +62,8 @@ docs:
 
 clean:
 	rm -rf $(BUILD_DIR_DEBUG) $(BUILD_DIR_RELEASE)
+
+clean-docs:
+	rm -rf $(DOCS_DIR)
 
 .PHONY: all debug release clean
