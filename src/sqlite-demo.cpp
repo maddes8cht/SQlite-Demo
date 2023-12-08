@@ -63,8 +63,6 @@ void executeSqlStatement(sqlite3 *db, const char *sqlStatement) {
         sqlite3_close(db);
         throw SQLiteException("Error executing SQL statement: " + std::string(sqlite3_errmsg(db)));
     }
-
-    // No need to close the database connection here; it's already done in the functions
 }
 
 /**
@@ -89,8 +87,6 @@ void executeAndPrintSelectStatement(sqlite3 *db, const char *selectStatement) {
         sqlite3_close(db);
         throw SQLiteException("Error executing SELECT statement: " + std::string(sqlite3_errmsg(db)));
     }
-
-    // No need to close the database connection here; it's already done in the functions
 }
 
 /**
