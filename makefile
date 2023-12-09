@@ -7,7 +7,7 @@ RELEASE_CCFLAGS = $(COMMON_CCFLAGS) -O2
 LDFLAGS = -lsqlite3
 
 SRC_DIR = src
-TEST_DIR = doctest
+TEST_DIR = test
 DOCS_DIR = doc
 BUILD_DIR_DEBUG = build/debug
 BUILD_DIR_RELEASE = build/release
