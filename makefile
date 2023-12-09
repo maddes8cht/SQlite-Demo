@@ -31,7 +31,7 @@ TEST_OBJECTS_RELEASE = $(patsubst $(TEST_DIR)/%.cpp,$(BUILD_DIR_TEST_RELEASE)/%.
 # Default value for VERSION (can be overridden from the command line)
 VERSION ?= release
 
-.PHONY: all debug release test clean
+.PHONY: all debug release test clean clean-docs docs purge distclean
 
 all: debug release test
 
@@ -96,10 +96,15 @@ $(BUILD_DIR_DEBUG) $(BUILD_DIR_RELEASE) $(BUILD_DIR_TEST_DEBUG) $(BUILD_DIR_TEST
 docs:
 	doxygen Doxyfile
 
-clean:
+clean-all: clean-code clean-docs
+
+clean-code:
 	rm -rf $(BUILD_DIR_DEBUG) $(BUILD_DIR_RELEASE) $(BUILD_DIR_TEST_DEBUG) $(BUILD_DIR_TEST_RELEASE)
 
 clean-docs:
 	rm -rf $(DOCS_DIR)
 
-.PHONY: all debug release test clean
+clean-purge:
+	rm -rf $(BUILD_DIR_DEBUG)/*.o $(BUILD_DIR_RELEASE)/*.o $(BUILD_DIR_TEST_DEBUG)/*.o $(BUILD_DIR_TEST_RELEASE)/*.o
+	rm -rf $(BUILD_DIR_DEBUG)/*.d $(BUILD_DIR_RELEASE)/*.d $(BUILD_DIR_TEST_DEBUG)/*.d $(BUILD_DIR_TEST_RELEASE)/*.d
+

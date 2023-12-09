@@ -1,9 +1,21 @@
+/**
+ * @file sqlite-helper.h
+ * @brief Declaration of the SqliteHelper class and related exceptions.
+ *
+ * Defines the SqliteHelper class for interacting with SQLite databases.
+ * Defines SQLiteException class for handling SQLite-related errors.
+ */
+
 #ifndef SQLITE_HELPER_H
 #define SQLITE_HELPER_H
 
+#include <cstring>
+#include <iomanip>
 #include <iostream>
-#include <stdexcept>
+#include <numeric>
 #include <sqlite3.h>
+#include <stdexcept>
+#include <vector>
 
 /**
  * @brief Custom exception class for SQLite-related errors.
@@ -12,46 +24,66 @@
  * that occur during SQLite operations.
  */
 class SQLiteException : public std::runtime_error {
-public:
+  public:
     /**
      * @brief Constructs an SQLiteException with a given error message.
-     *
      * @param[in] message The error message.
      */
     SQLiteException(const std::string &message) : std::runtime_error(message) {}
 };
 
 /**
- * @brief SQLite Database Connection
+ * @class SqliteHelper
+ * @brief Provides functionality to interact with SQLite databases.
  *
- * This function opens a SQLite database connection.
- *
- * @param[out] db SQLite database connection
- * @param[in] dbName Name of the database
- * @throw SQLiteException on failure
+ * The SqliteHelper class encapsulates common SQLite operations, such as opening a database,
+ * executing SQL statements, and retrieving results from SELECT queries.
  */
-void openDatabase(sqlite3 *&db, const char *dbName);
+class SqliteHelper {
+  public:
+    /**
+     * @brief Constructor for SqliteHelper.
+     * Destroys the SqliteHelper object and closes the SQLite database connection.
+     * @param[in] dbName Name of the SQLite database file.
+     */
+    SqliteHelper(const char *dbName);
 
-/**
- * @brief Execute SQL Statement
- *
- * This function executes a given SQL statement.
- *
- * @param[in] db SQLite database connection
- * @param[in] sqlStatement SQL statement to be executed
- * @throw SQLiteException on failure
- */
-void executeSqlStatement(sqlite3 *db, const char *sqlStatement);
+    /**
+     * @brief Destructor for SqliteHelper.
+     */
+    ~SqliteHelper();
 
-/**
- * @brief Execute SELECT Statement and Print Results
- *
- * This function executes a SELECT SQL statement and prints the results.
- *
- * @param[in] db SQLite database connection
- * @param[in] selectStatement SELECT SQL statement to be executed
- * @throw SQLiteException on failure
- */
-void executeAndPrintSelectStatement(sqlite3 *db, const char *selectStatement);
+    /**
+     * @brief Executes an SQL statement that does not return results (e.g., INSERT, UPDATE, DELETE).
+     * @param[in] sqlStatement The SQL statement to be executed.
+     * @throw SQLiteException if the execution of the statement fails.
+     */
+    void executeSqlStatement(const char *sqlStatement);
+
+    /**
+     * @brief Executes an SQL SELECT statement and returns the result as a vector of vectors of strings.
+     * @param[in] selectStatement The SELECT SQL statement to be executed.
+     * @return A vector of vectors of strings representing the result set.
+     * @throw SQLiteException if the execution of the statement fails.
+     */
+    std::vector<std::vector<std::string>> executeSelectStatement(const char *selectStatement);
+
+    /**
+     * @brief Prints the result of an SQL SELECT statement with proper formatting.
+     * @param[in] result The result set to be printed.
+     * @param[in] columnWidths The width of each column for proper formatting.
+     */
+    void printSqlResult(const std::vector<std::vector<std::string>> &result, const std::vector<int> &columnWidths);
+
+  private:
+    sqlite3 *db; ///< SQLite database connection.
+
+    /**
+     * @brief Opens a connection to an SQLite database.
+     * @param[in] dbName Name of the database.
+     * @throw SQLiteException if opening the database fails.
+     */
+    void openDatabase(const char *dbName);
+};
 
 #endif // SQLITE_HELPER_H
