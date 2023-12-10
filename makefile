@@ -4,7 +4,7 @@ COMMON_CCFLAGS = -Wall -fdiagnostics-color=always
 DEBUG_CCFLAGS = $(COMMON_CCFLAGS) -g -DDEBUG
 RELEASE_CCFLAGS = $(COMMON_CCFLAGS) -O2
 
-LDFLAGS = -lsqlite3
+LDFLAGS = -lsqlite3 -lCatch2
 
 SRC_DIR = src
 TEST_DIR = test
@@ -85,16 +85,19 @@ $(BUILD_DIR_RELEASE)/%.o: $(SRC_DIR)/%.cpp | $(BUILD_DIR_RELEASE)
 	$(CC) $(RELEASE_CCFLAGS) -MMD -c -o $@ $<
 
 $(BUILD_DIR_TEST_DEBUG)/%.o: $(TEST_DIR)/%.cpp | $(BUILD_DIR_TEST_DEBUG)
-	$(CC) $(DEBUG_CCFLAGS) -MMD -c -o $@ $<
+	$(CC) $(DEBUG_CCFLAGS) -MMD -c -o $@ $< -I$(SRC_DIR)
 
 $(BUILD_DIR_TEST_RELEASE)/%.o: $(TEST_DIR)/%.cpp | $(BUILD_DIR_TEST_RELEASE)
-	$(CC) $(RELEASE_CCFLAGS) -MMD -c -o $@ $<
+	$(CC) $(RELEASE_CCFLAGS) -MMD -c -o $@ $< -I$(SRC_DIR)
 
 $(BUILD_DIR_DEBUG) $(BUILD_DIR_RELEASE) $(BUILD_DIR_TEST_DEBUG) $(BUILD_DIR_TEST_RELEASE):
 	mkdir -p $@
 
-docs:
+doxygen:
 	doxygen Doxyfile
+
+docs: doxygen
+	$(MAKE) -C doc/latex
 
 clean-all: clean-code clean-docs
 
