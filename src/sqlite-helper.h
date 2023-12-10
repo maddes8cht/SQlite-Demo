@@ -43,13 +43,14 @@ class SqliteHelper {
   public:
     /**
      * @brief Constructor for SqliteHelper.
-     * Destroys the SqliteHelper object and closes the SQLite database connection.
      * @param[in] dbName Name of the SQLite database file.
      */
     SqliteHelper(const char *dbName);
 
     /**
      * @brief Destructor for SqliteHelper.
+     * 
+     * Destroys the SqliteHelper object and closes the SQLite database connection.
      */
     ~SqliteHelper();
 
@@ -75,8 +76,14 @@ class SqliteHelper {
      */
     void printSqlResult(const std::vector<std::vector<std::string>> &result, const std::vector<int> &columnWidths);
 
-  private:
-    sqlite3 *db; ///< SQLite database connection.
+private:
+    /**
+     * @brief SQLite Database Connection.
+     * 
+     * The 'db' pointer encapsulates the SQLite database connection for each SqliteHelper instance.
+     * The pointer is initialized in the constructor and closed in the destructor.
+     */
+    sqlite3 *db;
 
     /**
      * @brief Opens a connection to an SQLite database.
