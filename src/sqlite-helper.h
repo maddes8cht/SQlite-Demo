@@ -71,21 +71,6 @@ class SqliteHelper {
     SqliteResult executeSqlStatement(const char *sqlStatement);
  
 
-    /**
-     * @brief Executes an SQL SELECT statement and returns the result as a vector of vectors of strings.
-     * @param[in] selectStatement The SELECT SQL statement to be executed.
-     * @return A vector of vectors of strings representing the result set.
-     * @throw SQLiteException if the execution of the statement fails.
-     */
-    std::vector<std::vector<std::string>> executeSelectStatement(const char *selectStatement);
-
-    /**
-     * @brief Prints the result of an SQL SELECT statement with proper formatting.
-     * @param[in] result The result set to be printed.
-     * @param[in] columnWidths The width of each column for proper formatting.
-     */
-    void printSqlResult(const std::vector<std::vector<std::string>> &result, const std::vector<int> &columnWidths);
-
 private:
     /**
      * @brief SQLite Database Connection.
