@@ -13,10 +13,13 @@
 #include <iomanip>
 #include <string>
 #include <vector>
+#include <numeric>
 
 /**
  * @class SqliteResult
  * @brief Encapsulates the result of an SQLite SELECT query.
+ * 
+ * Represents the result of an SQLite query, including the header and data.
  */
 class SqliteResult {
 public:
@@ -43,6 +46,13 @@ public:
      * @return The number of columns.
      */
     size_t getColumnCount() const;
+
+    /**
+     * @brief Checks if the result set is empty.
+     * @return True if the result set is empty, false otherwise.
+     */
+    bool empty() const;
+
 
     /**
      * @brief Prints the result set with formatted output.
