@@ -16,6 +16,7 @@
 #include <sqlite3.h>
 #include <stdexcept>
 #include <vector>
+#include "sqlite-result.h"
 
 /**
  * @brief Custom exception class for SQLite-related errors.
@@ -59,7 +60,16 @@ class SqliteHelper {
      * @param[in] sqlStatement The SQL statement to be executed.
      * @throw SQLiteException if the execution of the statement fails.
      */
-    void executeSqlStatement(const char *sqlStatement);
+    // void executeSqlStatement(const char *sqlStatement);
+
+    /**
+     * @brief Executes an SQL statement and returns a result object.
+     * @param[in] sqlStatement The SQL statement to be executed.
+     * @return A SqliteResult object representing the result set.
+     * @throw SQLiteException if the execution of the statement fails.
+     */
+    SqliteResult executeSqlStatement(const char *sqlStatement);
+ 
 
     /**
      * @brief Executes an SQL SELECT statement and returns the result as a vector of vectors of strings.

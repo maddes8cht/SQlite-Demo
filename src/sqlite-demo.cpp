@@ -24,20 +24,16 @@ int main() {
         const char *insertDataSQL = "INSERT INTO example_table (name, age) VALUES ('John', 25), ('Alice', 30), ('Bob', 22);";
         sqliteHelper.executeSqlStatement(insertDataSQL);
 
-        // Execute SELECT Query and Print Data
-        const char *selectDataSQL = "SELECT * FROM example_table;";
-        auto result = sqliteHelper.executeSelectStatement(selectDataSQL);
-
-        // Print result
-
+        SqliteResult result = sqliteHelper.executeSqlStatement("SELECT * FROM example_table;");
+        printf("print result:\n");
+        result.print(); // Print the result if it's a query
+        printf("done\n");
         /*
-        for (const auto &row : result) {
-            for (const auto &value : row) {
-                std::cout << value << " | ";
-            }
-            std::cout << std::endl;
-        }
+                // Execute SELECT Query and Print Data
+                const char *selectDataSQL = "SELECT * FROM example_table;";
+                auto result = sqliteHelper.executeSelectStatement(selectDataSQL);
         */
+
 
     } catch (const SQLiteException &ex) {
         std::cerr << "SQLite Exception: " << ex.what() << std::endl;
