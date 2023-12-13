@@ -25,15 +25,9 @@ int main() {
         sqliteHelper.executeSqlStatement(insertDataSQL);
 
         SqliteResult result = sqliteHelper.executeSqlStatement("SELECT * FROM example_table;");
-        printf("print result:\n");
+        printf("print result:\n\n");
         result.print(); // Print the result if it's a query
-        printf("done\n");
-        /*
-                // Execute SELECT Query and Print Data
-                const char *selectDataSQL = "SELECT * FROM example_table;";
-                auto result = sqliteHelper.executeSelectStatement(selectDataSQL);
-        */
-
+        printf("\ndone\n");
 
     } catch (const SQLiteException &ex) {
         std::cerr << "SQLite Exception: " << ex.what() << std::endl;
