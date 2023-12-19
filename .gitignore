@@ -33,3 +33,5 @@
 
 # Ignore Doxygen-generated documentation
 doc/
+
+example.db
